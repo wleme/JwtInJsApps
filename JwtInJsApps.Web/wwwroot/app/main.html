@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>main</title>
+</head>
+<body>
+    <script src="tools.js"></script>
+    <form>
+        <input type="text" name="username" placeholder="username" autocomplete="off" />
+        <input type="password" name="password" placeholder="pwd" />
+        <input type="checkbox" name="rememberme" />
+        <input type="submit" id="submitForm" />
+        <button id="checkStatus">check auth status</button>
+
+    </form>
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+            var btn = document.getElementById('submitForm');
+            var status = document.getElementById('checkStatus');
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                postAjax('https://localhost:44342/auth/login/', {
+                    'username': document.getElementsByName('username')[0].value,
+                    'password': document.getElementsByName('password')[0].value,
+                    'rememberme':document.getElementsByName('rememberme')[0].checked
+                }, function (data) { console.log(data); });
+            });
+
+            status.addEventListener('click', function (e) {
+                e.preventDefault();
+                getAjax('https://localhost:44342/dummy/', function (data) { console.log('it is authenticated!!!!' + data); });
+            });
+
+        })();
+    </script>
+</body>
+
+</html>
